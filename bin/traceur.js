@@ -540,7 +540,6 @@
       resolveUrl = $__2.resolveUrl,
       isAbsolute = $__2.isAbsolute;
   var moduleInstantiators = Object.create(null);
-  var bundleStore = Object.create(null);
   var baseURL;
   if (global.location && global.location.href) baseURL = resolveUrl(global.location.href, './'); else baseURL = '';
   var UncoatedModuleEntry = function UncoatedModuleEntry(url, uncoatedModule) {
@@ -625,17 +624,15 @@
       if (moduleInstantiators[normalizedName]) throw new Error('duplicate module named ' + normalizedName);
       moduleInstantiators[normalizedName] = new UncoatedModuleInstantiator(normalizedName, func);
     },
+    bundleStore: Object.create(null),
     register: function(name, deps, func) {
-      if (!deps || !deps.length) this.registerModule(name, func); else bundleStore[name] = {
+      if (!deps || !deps.length) this.registerModule(name, func); else this.bundleStore[name] = {
         deps: deps,
         execute: func
       };
     },
     getAnonymousModule: function(func) {
       return new Module(func.call(global), liveModuleSentinel);
-    },
-    getBundledModule: function(name) {
-      return bundleStore[name];
     },
     getForTesting: function(name) {
       var $__0 = this;
@@ -20225,7 +20222,7 @@ $traceurRuntime.ModuleStore.registerModule("traceur@0.0.22/src/runtime/LoaderHoo
       return options;
     },
     bundledModule: function(normalizedName) {
-      return this.moduleStore_.getBundledModule(normalizedName);
+      return this.moduleStore_.bundleStore[normalizedName];
     }
   }, {});
   return {get LoaderHooks() {
@@ -20355,11 +20352,11 @@ $traceurRuntime.ModuleStore.registerModule("traceur@0.0.22/src/runtime/InternalL
       return execute();
     }
   }, {}, CodeUnit);
-  var LoadCodeUnit = function LoadCodeUnit(loaderHooks, normalizedName, name, referrerName, address) {
-    $traceurRuntime.superCall(this, $LoadCodeUnit.prototype, "constructor", [loaderHooks, normalizedName, 'module', NOT_STARTED, name, referrerName, address]);
+  var HookedCodeUnit = function HookedCodeUnit() {
+    $traceurRuntime.defaultSuperCall(this, $HookedCodeUnit.prototype, arguments);
   };
-  var $LoadCodeUnit = LoadCodeUnit;
-  ($traceurRuntime.createClass)(LoadCodeUnit, {
+  var $HookedCodeUnit = HookedCodeUnit;
+  ($traceurRuntime.createClass)(HookedCodeUnit, {
     getModuleSpecifiers: function() {
       return this.loaderHooks.getModuleSpecifiers(this);
     },
@@ -20367,6 +20364,11 @@ $traceurRuntime.ModuleStore.registerModule("traceur@0.0.22/src/runtime/InternalL
       return this.loaderHooks.evaluateCodeUnit(this);
     }
   }, {}, CodeUnit);
+  var LoadCodeUnit = function LoadCodeUnit(loaderHooks, normalizedName, name, referrerName, address) {
+    $traceurRuntime.superCall(this, $LoadCodeUnit.prototype, "constructor", [loaderHooks, normalizedName, 'module', NOT_STARTED, name, referrerName, address]);
+  };
+  var $LoadCodeUnit = LoadCodeUnit;
+  ($traceurRuntime.createClass)(LoadCodeUnit, {}, {}, HookedCodeUnit);
   var EvalCodeUnit = function EvalCodeUnit(loaderHooks, code) {
     var type = arguments[2] !== (void 0) ? arguments[2]: 'script';
     var normalizedName = arguments[3];
@@ -20376,14 +20378,7 @@ $traceurRuntime.ModuleStore.registerModule("traceur@0.0.22/src/runtime/InternalL
     this.text = code;
   };
   var $EvalCodeUnit = EvalCodeUnit;
-  ($traceurRuntime.createClass)(EvalCodeUnit, {
-    getModuleSpecifiers: function() {
-      return this.loaderHooks.getModuleSpecifiers(this);
-    },
-    evaluate: function() {
-      return this.loaderHooks.evaluateCodeUnit(this);
-    }
-  }, {}, CodeUnit);
+  ($traceurRuntime.createClass)(EvalCodeUnit, {}, {}, HookedCodeUnit);
   var InternalLoader = function InternalLoader(loaderHooks) {
     this.loaderHooks = loaderHooks;
     this.reporter = loaderHooks.reporter;

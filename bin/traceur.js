@@ -19096,7 +19096,7 @@ $traceurRuntime.ModuleStore.registerModule("traceur@0.0.22/src/codegeneration/Re
       $__290 = Object.freeze(Object.defineProperties(["$traceurRuntime.ModuleStore.get(", ")"], {raw: {value: Object.freeze(["$traceurRuntime.ModuleStore.get(", ")"])}})),
       $__291 = Object.freeze(Object.defineProperties(["$traceurRuntime.getModuleImpl(", ")"], {raw: {value: Object.freeze(["$traceurRuntime.getModuleImpl(", ")"])}}));
   var assert = $traceurRuntime.getModuleImpl("traceur@0.0.22/src/util/assert").assert;
-  var createBindingIdentifier = $traceurRuntime.getModuleImpl("traceur@0.0.22/src/codegeneration/ParseTreeFactory").createBindingIdentifier;
+  var createIdentifierExpression = $traceurRuntime.getModuleImpl("traceur@0.0.22/src/codegeneration/ParseTreeFactory").createIdentifierExpression;
   var globalThis = $traceurRuntime.getModuleImpl("traceur@0.0.22/src/codegeneration/globalThis").default;
   var ModuleTransformer = $traceurRuntime.getModuleImpl("traceur@0.0.22/src/codegeneration/ModuleTransformer").ModuleTransformer;
   var $__293 = $traceurRuntime.getModuleImpl("traceur@0.0.22/src/codegeneration/PlaceholderParser"),
@@ -19129,7 +19129,7 @@ $traceurRuntime.ModuleStore.registerModule("traceur@0.0.22/src/codegeneration/Re
         path: tree.token,
         local: localName
       });
-      var localIdentifier = createBindingIdentifier(localName);
+      var localIdentifier = createIdentifierExpression(localName);
       if (this.moduleSpecifierKind_ === 'module') return parseExpression($__290, localIdentifier);
       return parseExpression($__291, localIdentifier);
     }

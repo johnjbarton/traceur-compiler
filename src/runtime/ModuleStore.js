@@ -198,6 +198,7 @@
   // node_module/traceur generates calls to System.registerModule.
   global.System = {
     registerModule: ModuleStore.registerModule,
+    register: ModuleStore.register,
     get: ModuleStore.get,
     set: ModuleStore.set,
     normalize: ModuleStore.normalize,

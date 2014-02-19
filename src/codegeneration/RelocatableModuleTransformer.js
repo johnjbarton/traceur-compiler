@@ -50,7 +50,7 @@ export class RelocatableModuleTransformer extends ModuleTransformer {
       func = parseExpression `${func}.bind(${globalThis()})`;
 
     return parseStatements
-        `$traceurRuntime.ModuleStore.register(${this.moduleName}, ${depPaths}, ${func});`;
+        `System.register(${this.moduleName}, ${depPaths}, ${func});`;
   }
 
   /**
@@ -70,7 +70,7 @@ export class RelocatableModuleTransformer extends ModuleTransformer {
     var localIdentifier = createIdentifierExpression(localName);
 
     if (this.moduleSpecifierKind_ === 'module')
-      return parseExpression `$traceurRuntime.ModuleStore.get(${localIdentifier})`;
-    return parseExpression `$traceurRuntime.getModuleImpl(${localIdentifier})`;
+      return parseExpression `System.get(${localIdentifier})`;
+    return parseExpression `System.get(${localIdentifier})`;
   }
 }

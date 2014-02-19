@@ -660,6 +660,7 @@
   $traceurRuntime.ModuleStore = ModuleStore;
   global.System = {
     registerModule: ModuleStore.registerModule,
+    register: ModuleStore.register,
     get: ModuleStore.get,
     set: ModuleStore.set,
     normalize: ModuleStore.normalize
@@ -19092,9 +19093,9 @@ $traceurRuntime.ModuleStore.registerModule("traceur@0.0.22/src/codegeneration/Re
   var __moduleName = "traceur@0.0.22/src/codegeneration/RelocatableModuleTransformer";
   var $__287 = Object.freeze(Object.defineProperties(["function(", ") {\n      ", "\n    }"], {raw: {value: Object.freeze(["function(", ") {\n      ", "\n    }"])}})),
       $__288 = Object.freeze(Object.defineProperties(["", ".bind(", ")"], {raw: {value: Object.freeze(["", ".bind(", ")"])}})),
-      $__289 = Object.freeze(Object.defineProperties(["$traceurRuntime.ModuleStore.register(", ", ", ", ", ");"], {raw: {value: Object.freeze(["$traceurRuntime.ModuleStore.register(", ", ", ", ", ");"])}})),
-      $__290 = Object.freeze(Object.defineProperties(["$traceurRuntime.ModuleStore.get(", ")"], {raw: {value: Object.freeze(["$traceurRuntime.ModuleStore.get(", ")"])}})),
-      $__291 = Object.freeze(Object.defineProperties(["$traceurRuntime.getModuleImpl(", ")"], {raw: {value: Object.freeze(["$traceurRuntime.getModuleImpl(", ")"])}}));
+      $__289 = Object.freeze(Object.defineProperties(["System.register(", ", ", ", ", ");"], {raw: {value: Object.freeze(["System.register(", ", ", ", ", ");"])}})),
+      $__290 = Object.freeze(Object.defineProperties(["System.get(", ")"], {raw: {value: Object.freeze(["System.get(", ")"])}})),
+      $__291 = Object.freeze(Object.defineProperties(["System.get(", ")"], {raw: {value: Object.freeze(["System.get(", ")"])}}));
   var assert = $traceurRuntime.getModuleImpl("traceur@0.0.22/src/util/assert").assert;
   var createIdentifierExpression = $traceurRuntime.getModuleImpl("traceur@0.0.22/src/codegeneration/ParseTreeFactory").createIdentifierExpression;
   var globalThis = $traceurRuntime.getModuleImpl("traceur@0.0.22/src/codegeneration/globalThis").default;
@@ -21012,6 +21013,9 @@ $traceurRuntime.ModuleStore.registerModule("traceur@0.0.22/src/runtime/TraceurLo
         }
       }
       return map;
+    },
+    register: function(name, deps, execute) {
+      return $traceurRuntime.ModuleStore.register(name, deps, execute);
     },
     get options() {
       return this.internalLoader_.options;

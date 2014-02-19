@@ -93,6 +93,16 @@ export class TraceurLoader extends Loader {
   }
 
   /**
+  * Bundle registration
+  * @param {string} normalized module name
+  * @param {array} unnormalized dependency array
+  * @param {execute} instantiation execu
+  */
+  register(name, deps, execute) {
+    return $traceurRuntime.ModuleStore.register(name, deps, execute);
+  }
+
+  /**
   * @return {Object} traceur-specific options object
   */
   get options() {

@@ -51,3 +51,7 @@ System.import(moduleName, {metadata: metadata}).catch(function(err) {
   console.error('tval fails:',  err.stack || err + '');
   process.exit(1);
 });
+
+process.on('unhandledRejection', function(reason, p) {
+  console.error("Unhandled Rejection: ", reason.stack || reason);
+});

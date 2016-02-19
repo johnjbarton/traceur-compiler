@@ -589,4 +589,16 @@ suite('context test', function() {
     });
   });
 
+  test('tval reports unhandled rejection', function(done) {
+    var cmd = 'node tval test/unit/node/resources/rejected_reference_error.js';
+    exec(cmd, function(error, stdout, stderr) {
+      assert.isNull(error);
+      let lines = stderr.split('\n');
+      assert.equal(lines[0], 'Unhandled Rejection:  ReferenceError: an_undefined_reference is not defined');
+      let loc = lines[1].split(/\/|\\/);
+      assert.equal(loc.pop(), 'rejected_reference_error.js:6:3');
+      done();
+    });
+  });
+
 });
